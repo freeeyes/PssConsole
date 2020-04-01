@@ -22,6 +22,7 @@ int main()
             if (strCommand.length() > 0)
             {
                 Set_Console_Output(console_context, "Command is (" + strCommand + ")");
+                Set_Console_Output_singleLine(console_context, "OK");
             }
         }
     }

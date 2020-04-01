@@ -35,6 +35,7 @@ public:
 	};
 
 	unsigned int console_line    = 9;
+	unsigned int last_line_size  = 0;
 	HANDLE console_stdout        = 0;
 	enum_screen_Type screen_type = enum_screen_Type::SCREEN_OUT;
 	COORD  console_cursorPos;
@@ -46,5 +47,7 @@ void Init_Console_Context(CConsleContext& console_context);
 void Set_Console_Input(CConsleContext& console_context, string& command_info);
 
 void Set_Console_Output(CConsleContext& console_context, string output_info);
+
+void Set_Console_Output_singleLine(CConsleContext& console_context, string output_info);
 
 void Close_Console_Context(CConsleContext& console_context);
