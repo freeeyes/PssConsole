@@ -2,12 +2,16 @@
 
 void Init_Console_Context(CConsleContext& console_context)
 {
+#ifdef _WIN32
 	console_context.console_stdout = GetStdHandle(STD_OUTPUT_HANDLE);
+#endif
 }
 
 void Close_Console_Context(CConsleContext& console_context)
 {
+#ifdef _WIN32
 	CloseHandle(console_context.console_stdout);
+#endif
 }
 
 void Set_Console_Input(CConsleContext& console_context, string& command_info)

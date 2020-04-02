@@ -24,23 +24,32 @@ enum class enum_screen_Type
 	SCREEN_OUT,
 };
 
-#ifdef _WIN32
+
 class CConsleContext
 {
 public:
 	CConsleContext()
 	{
+#ifdef _WIN32
 		console_cursorPos.X = 0;
 		console_cursorPos.Y = 0;
+#endif
 	};
 
+#ifdef _WIN32
+	HANDLE console_stdout = 0;
+	COORD  console_cursorPos;
+#endif
 	unsigned int console_line    = 9;
 	unsigned int last_line_size  = 0;
-	HANDLE console_stdout        = 0;
 	enum_screen_Type screen_type = enum_screen_Type::SCREEN_OUT;
-	COORD  console_cursorPos;
+
+	string server_ip;
+	int server_port = 0;
+	string user_name;
+	string user_password;
 };
-#endif
+
 
 void Init_Console_Context(CConsleContext& console_context);
 
