@@ -1,4 +1,4 @@
-﻿#include "base.h"
+﻿#include "clientconnect.h"
 
 int main()
 {
@@ -8,6 +8,8 @@ int main()
     Init_Console_Context(console_context);
 
     cout << console_title << endl;
+
+    read_client_connect_info(console_context, CLIENT_CONFIG_FILE);
 
     while (true)
     {

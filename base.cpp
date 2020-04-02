@@ -25,7 +25,7 @@ void Set_Console_Output(CConsleContext& console_context, string output_info)
 	cout << output_info.c_str() << endl;
 	console_context.screen_type = enum_screen_Type::SCREEN_OUT;
 	console_context.console_line++;
-	console_context.last_line_size = output_info.length();
+	console_context.last_line_size = (unsigned int)output_info.length();
 }
 
 void Set_Console_Output_singleLine(CConsleContext& console_context, string output_info)

@@ -105,6 +105,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>./TinyXML;./brynet;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -149,11 +150,19 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="base.cpp" />
+    <ClCompile Include="clientconnect.cpp" />
     <ClCompile Include="PssConsole.cpp" />
+    <ClCompile Include="TinyXML\tinystr.cpp" />
+    <ClCompile Include="TinyXML\tinyxml.cpp" />
+    <ClCompile Include="TinyXML\tinyxmlerror.cpp" />
+    <ClCompile Include="TinyXML\tinyxmlparser.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="base.h" />
+    <ClInclude Include="clientconnect.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="TinyXML\tinystr.h" />
+    <ClInclude Include="TinyXML\tinyxml.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="PssConsole.rc" />
