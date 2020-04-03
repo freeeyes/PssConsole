@@ -79,7 +79,7 @@ bool connect_server(CConsleContext& console_context)
 			});
 
 		//处理连接成功信息
-		session->setDisConnectCallback([](TcpConnection::Ptr& session) {
+		session->setDisConnectCallback([](TcpConnection::Ptr session) {
 			//处理断开事件
 		});
 	};

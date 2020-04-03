@@ -24,20 +24,20 @@
     <ClCompile Include="base.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="TinyXML\tinystr.cpp">
-      <Filter>tinyxml</Filter>
-    </ClCompile>
-    <ClCompile Include="TinyXML\tinyxml.cpp">
-      <Filter>tinyxml</Filter>
-    </ClCompile>
-    <ClCompile Include="TinyXML\tinyxmlerror.cpp">
-      <Filter>tinyxml</Filter>
-    </ClCompile>
-    <ClCompile Include="TinyXML\tinyxmlparser.cpp">
-      <Filter>tinyxml</Filter>
-    </ClCompile>
     <ClCompile Include="clientconnect.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdlib\tinyxml\tinystr.cpp">
+      <Filter>tinyxml</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdlib\tinyxml\tinyxml.cpp">
+      <Filter>tinyxml</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdlib\tinyxml\tinyxmlerror.cpp">
+      <Filter>tinyxml</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdlib\tinyxml\tinyxmlparser.cpp">
+      <Filter>tinyxml</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -47,14 +47,14 @@
     <ClInclude Include="base.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="TinyXML\tinystr.h">
-      <Filter>tinyxml</Filter>
-    </ClInclude>
-    <ClInclude Include="TinyXML\tinyxml.h">
-      <Filter>tinyxml</Filter>
-    </ClInclude>
     <ClInclude Include="clientconnect.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdlib\tinyxml\tinystr.h">
+      <Filter>tinyxml</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdlib\tinyxml\tinyxml.h">
+      <Filter>tinyxml</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
