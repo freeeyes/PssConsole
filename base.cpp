@@ -16,6 +16,10 @@ void Close_Console_Context(CConsleContext& console_context)
 
 void Set_Console_Input(CConsleContext& console_context, string& command_info)
 {
+#ifdef WIN32
+	SetConsoleTextAttribute(console_context.console_stdout, FOREGROUND_GREEN);
+#endif
+
 	cout << "Command:>";
 	cin.clear();
 	getline(cin, command_info);
@@ -24,8 +28,11 @@ void Set_Console_Input(CConsleContext& console_context, string& command_info)
 	console_context.last_line_size = 9;
 }
 
-void Set_Console_Output(CConsleContext& console_context, string output_info)
+void Set_Console_Output(CConsleContext& console_context, string output_info, short color)
 {
+#ifdef WIN32
+	SetConsoleTextAttribute(console_context.console_stdout, color);
+#endif
 	cout << output_info.c_str() << endl;
 	console_context.screen_type = enum_screen_Type::SCREEN_OUT;
 	console_context.console_line++;

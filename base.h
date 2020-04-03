@@ -55,7 +55,7 @@ void Init_Console_Context(CConsleContext& console_context);
 
 void Set_Console_Input(CConsleContext& console_context, string& command_info);
 
-void Set_Console_Output(CConsleContext& console_context, string output_info);
+void Set_Console_Output(CConsleContext& console_context, string output_info, short color = 2);
 
 void Set_Console_Output_singleLine(CConsleContext& console_context, string output_info);
 
