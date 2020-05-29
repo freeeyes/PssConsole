@@ -13,6 +13,6 @@ static const char CLIENT_CONFIG_FILE[] = "config.xml";
 using namespace brynet;
 using namespace brynet::net;
 
-bool read_client_connect_info(CConsleContext& console_context, const char* config_file);
+bool read_client_connect_info(shared_ptr<CConsleContext> console_context, const char* config_file);
 
-bool connect_server(CConsleContext& console_context);
+bool connect_server(shared_ptr<CConsleContext> console_context);

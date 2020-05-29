@@ -25,6 +25,18 @@ enum class enum_screen_Type
 	SCREEN_OUT,
 };
 
+enum class emum_text_color
+{
+	CONSOLE_FOREGROUND_BLUE = 0x0001, // text color contains blue.
+    CONSOLE_FOREGROUND_GREEN = 0x0002, // text color contains green.
+	CONSOLE_FOREGROUND_RED = 0x0004,  // text color contains red.
+	CONSOLE_FOREGROUND_INTENSITY = 0x0008, // text color is intensified.
+	CONSOLE_BACKGROUND_BLUE = 0x0010, // background color contains blue.
+	CONSOLE_BACKGROUND_GREEN = 0x0020, // background color contains green.
+	CONSOLE_BACKGROUND_RED = 0x0040, // background color contains red.
+	CONSOLE_BACKGROUND_INTENSITY = 0x0080, // background color is intensified.
+};
+
 
 class CConsleContext
 {
@@ -52,12 +64,12 @@ public:
 };
 
 
-void Init_Console_Context(CConsleContext& console_context);
+void Init_Console_Context(shared_ptr<CConsleContext> console_context);
 
-void Set_Console_Input(CConsleContext& console_context, string& command_info);
+void Set_Console_Input(shared_ptr<CConsleContext> console_context, string& command_info);
 
-void Set_Console_Output(CConsleContext& console_context, string output_info, short color = 2);
+void Set_Console_Output(shared_ptr<CConsleContext> console_context, string output_info, emum_text_color color = emum_text_color::CONSOLE_FOREGROUND_GREEN);
 
-void Set_Console_Output_singleLine(CConsleContext& console_context, string output_info);
+void Set_Console_Output_singleLine(shared_ptr<CConsleContext> console_context, string output_info);
 
-void Close_Console_Context(CConsleContext& console_context);
+void Close_Console_Context(shared_ptr<CConsleContext> console_context);

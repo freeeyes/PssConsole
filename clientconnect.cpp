@@ -1,9 +1,8 @@
 #include "clientconnect.h"
 
-bool read_client_connect_info(CConsleContext& console_context, const char* config_file)
+bool read_client_connect_info(shared_ptr<CConsleContext> console_context, const char* config_file)
 {
 	string config_info;
-
 	char tmp_output[200] = { '\0' };
 
 	TiXmlDocument xml_document;
@@ -35,34 +34,34 @@ bool read_client_connect_info(CConsleContext& console_context, const char* confi
 
 	if (NULL != connect_node->Attribute("ServerIP"))
 	{
-		console_context.server_ip = connect_node->Attribute("ServerIP");
+		console_context->server_ip = connect_node->Attribute("ServerIP");
 	}
 	if (NULL != connect_node->Attribute("Port"))
 	{
-		console_context.server_port = atoi(connect_node->Attribute("Port"));
+		console_context->server_port = atoi(connect_node->Attribute("Port"));
 	}
 	if (NULL != connect_node->Attribute("UserName"))
 	{
-		console_context.user_name = connect_node->Attribute("UserName");
+		console_context->user_name = connect_node->Attribute("UserName");
 	}
 	if (NULL != connect_node->Attribute("Password"))
 	{
-		console_context.user_password = connect_node->Attribute("Password");
+		console_context->user_password = connect_node->Attribute("Password");
 	}
 
 	snprintf(tmp_output, 200, "[config]server_ip=%s,Port=%d,UserName=%s,Password=%s. OK", 
-		console_context.server_ip.c_str(),
-		console_context.server_port,
-		console_context.user_name.c_str(),
-		console_context.user_password.c_str());
+		console_context->server_ip.c_str(),
+		console_context->server_port,
+		console_context->user_name.c_str(),
+		console_context->user_password.c_str());
 
 	config_info = tmp_output;
-	Set_Console_Output(console_context, config_info, 4);
+	Set_Console_Output(console_context, config_info, emum_text_color::CONSOLE_BACKGROUND_GREEN);
 
 	return true;
 }
 
-bool connect_server(CConsleContext& console_context)
+bool connect_server(shared_ptr<CConsleContext> console_context)
 {
 	string client_name = "console";
 
@@ -72,16 +71,30 @@ bool connect_server(CConsleContext& console_context)
 	auto connector = AsyncConnector::Create();
 	connector->startWorkerThread();
 
-	auto enterCallback = [client_name](const TcpConnection::Ptr& session) {
+	auto enterCallback = [client_name, console_context](const TcpConnection::Ptr& session) {
 		session->setDataCallback([session](const char* buffer, size_t len) {
 			//处理接收数据
 			return len;
 			});
 
-		//处理连接成功信息
-		session->setDisConnectCallback([](TcpConnection::Ptr session) {
+		//处理链接成功信息
+		session->setDisConnectCallback([console_context](TcpConnection::Ptr session) {
 			//处理断开事件
+			string config_info;
+			char tmp_output[200] = { '\0' };
+
+			snprintf(tmp_output, 200, "[config](%s:%d) connect is disconnect.", console_context->server_ip.c_str(), console_context->server_port);
+			config_info = tmp_output;
+			Set_Console_Output(console_context, config_info, emum_text_color::CONSOLE_FOREGROUND_RED);
 		});
+
+		//处理链接建立成功消息
+		string config_info;
+		char tmp_output[200] = { '\0' };
+
+		snprintf(tmp_output, 200, "[config](%s:%d) connect is ok.", console_context->server_ip.c_str(), console_context->server_port);
+		config_info = tmp_output;
+		Set_Console_Output(console_context, config_info, emum_text_color::CONSOLE_FOREGROUND_GREEN);
 	};
 
 	auto failedCallback = []() {
@@ -98,7 +111,7 @@ bool connect_server(CConsleContext& console_context)
 			});
 
 	connectionBuilder.configureConnectOptions({
-			ConnectOption::WithAddr(console_context.server_ip, console_context.server_port),
+			ConnectOption::WithAddr(console_context->server_ip, console_context->server_port),
 			ConnectOption::WithTimeout(std::chrono::seconds(10)),
 			ConnectOption::WithFailedCallback(failedCallback),
 			ConnectOption::AddProcessTcpSocketCallback([](TcpSocket& socket) {

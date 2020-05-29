@@ -155,6 +155,7 @@
   <ItemGroup>
     <ClCompile Include="base.cpp" />
     <ClCompile Include="clientconnect.cpp" />
+    <ClCompile Include="CMessageThread.cpp" />
     <ClCompile Include="PssConsole.cpp" />
     <ClCompile Include="thirdlib\tinyxml\tinystr.cpp" />
     <ClCompile Include="thirdlib\tinyxml\tinyxml.cpp" />
@@ -164,6 +165,7 @@
   <ItemGroup>
     <ClInclude Include="base.h" />
     <ClInclude Include="clientconnect.h" />
+    <ClInclude Include="CMessageThread.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="thirdlib\tinyxml\tinystr.h" />
     <ClInclude Include="thirdlib\tinyxml\tinyxml.h" />

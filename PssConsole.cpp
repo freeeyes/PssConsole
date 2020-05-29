@@ -2,7 +2,7 @@
 
 int main()
 {
-    CConsleContext console_context;
+    shared_ptr<CConsleContext> console_context = std::make_shared<CConsleContext>();
     string strCommand;
 
     Init_Console_Context(console_context);
