@@ -72,8 +72,10 @@ bool connect_server(shared_ptr<CConsleContext> console_context)
 	connector->startWorkerThread();
 
 	auto enterCallback = [client_name, console_context](const TcpConnection::Ptr& session) {
-		session->setDataCallback([session](const char* buffer, size_t len) {
+		session->setDataCallback([session, console_context](const char* buffer, size_t len) {
 			//处理接收数据
+			Set_Console_Output(console_context, "Recv is (" + string(buffer) + ")");
+
 			return len;
 			});
 
@@ -86,20 +88,29 @@ bool connect_server(shared_ptr<CConsleContext> console_context)
 			snprintf(tmp_output, 200, "[config](%s:%d) connect is disconnect.", console_context->server_ip.c_str(), console_context->server_port);
 			config_info = tmp_output;
 			Set_Console_Output(console_context, config_info, emum_text_color::CONSOLE_FOREGROUND_RED);
+			console_context->connect_state = false;
 		});
 
 		//处理链接建立成功消息
+		console_context->connect_state = true;
 		string config_info;
 		char tmp_output[200] = { '\0' };
 
 		snprintf(tmp_output, 200, "[config](%s:%d) connect is ok.", console_context->server_ip.c_str(), console_context->server_port);
 		config_info = tmp_output;
 		Set_Console_Output(console_context, config_info, emum_text_color::CONSOLE_FOREGROUND_GREEN);
+		console_context->tcp_session = session;
 	};
 
-	auto failedCallback = []() {
-		std::cout << "connect failed" << std::endl;
+	auto failedCallback = [console_context]() {
 		//处理的断开事件
+		string config_info;
+		char tmp_output[200] = { '\0' };
+
+		snprintf(tmp_output, 200, "[config](%s:%d) connect is error.", console_context->server_ip.c_str(), console_context->server_port);
+		config_info = tmp_output;
+		Set_Console_Output(console_context, config_info, emum_text_color::CONSOLE_FOREGROUND_RED);
+		console_context->connect_state = false;
 	};
 
 	wrapper::ConnectionBuilder connectionBuilder;

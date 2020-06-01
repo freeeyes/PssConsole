@@ -1,30 +1,59 @@
 ﻿#include "clientconnect.h"
+#include "messagebusthread.h"
+#include "pssconsolemessage.h"
 
 int main()
 {
     shared_ptr<CConsleContext> console_context = std::make_shared<CConsleContext>();
-    string strCommand;
+    string _user_command;
+    CMessageThread _message_bus_thread;
 
     Init_Console_Context(console_context);
 
     cout << console_title << endl;
 
-    read_client_connect_info(console_context, CLIENT_CONFIG_FILE);
+    if (false == read_client_connect_info(console_context, CLIENT_CONFIG_FILE))
+    {
+        cout << "read (" << CLIENT_CONFIG_FILE << ") is error." << endl;
+        return 0;
+    }
+
+    //创建消息总线
+    _message_bus_thread.Create(1);
 
     while (true)
     {
-        Set_Console_Input(console_context, strCommand);
+        Set_Console_Input(console_context, _user_command);
 
-        if (strcmp(strCommand.c_str(),"bye") == 0)
+        if (strcmp(_user_command.c_str(),"bye") == 0)
         {
             break;
         }
         else
         {
-            if (strCommand.length() > 0)
+            if (_user_command.length() > 0)
             {
-                Set_Console_Output(console_context, "Command is (" + strCommand + ")");
+                //Set_Console_Output(console_context, "Command is (" + _user_command + ")");
                 //Set_Console_Output_singleLine(console_context, "OK");
+
+                _message_bus_thread.Add_do_function([_user_command, console_context]
+                    {
+                        //处理消息发送事件
+                        CPSSConsoleMessage pss_console_message;
+                        string console_message = pss_console_message.Get_console_command(console_context->user_name, _user_command);
+
+						if (false == console_context->connect_state)
+						{
+							connect_server(console_context);
+						}
+
+                        //如果连接已经存在
+                        if (true == console_context->connect_state)
+                        {
+                            //发送数据
+                            console_context->tcp_session->send(console_message.c_str(), console_message.length());
+                        }
+                    });
             }
         }
     }

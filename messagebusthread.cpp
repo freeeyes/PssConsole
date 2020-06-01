@@ -1,4 +1,4 @@
-#include "CMessageThread.h"
+#include "messagebusthread.h"
 
 static void thread_run(CThreadInfo* _thread_info)
 {
@@ -16,12 +16,12 @@ static void thread_run(CThreadInfo* _thread_info)
 		}
 		else
 		{
-			vector<UserFunctor> thread_curr_queue_data_;
+			vector<UserFunctor> _thread_curr_queue_data;
 			_thread_info->thread_mutex_.lock();
-			thread_curr_queue_data_.swap(_thread_info->thread_queue_data_);
+			_thread_curr_queue_data.swap(_thread_info->thread_queue_data_);
 			_thread_info->thread_mutex_.unlock();
 
-			for (UserFunctor f : thread_curr_queue_data_)
+			for (UserFunctor f : _thread_curr_queue_data)
 			{
 				f();
 			}

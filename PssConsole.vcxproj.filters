@@ -39,7 +39,10 @@
     <ClCompile Include="thirdlib\tinyxml\tinyxmlparser.cpp">
       <Filter>tinyxml</Filter>
     </ClCompile>
-    <ClCompile Include="CMessageThread.cpp">
+    <ClCompile Include="messagebusthread.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="pssonsolemessage.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -59,7 +62,10 @@
     <ClInclude Include="thirdlib\tinyxml\tinyxml.h">
       <Filter>tinyxml</Filter>
     </ClInclude>
-    <ClInclude Include="CMessageThread.h">
+    <ClInclude Include="messagebusthread.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="pssconsolemessage.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

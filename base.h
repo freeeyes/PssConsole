@@ -7,7 +7,14 @@
 #include <iostream>
 #include <string>
 
+#include "brynet/net/SocketLibFunction.hpp"
+#include "brynet/net/TcpService.hpp"
+#include "brynet/net/AsyncConnector.hpp"
+#include "brynet/net/wrapper/ConnectionBuilder.hpp"
+
 using namespace std;
+using namespace brynet;
+using namespace brynet::net;
 
 const string console_title = R"(==========================================================
  _____   _____ _____    _____                      _      
@@ -61,6 +68,8 @@ public:
 	int server_port = 0;
 	string user_name;
 	string user_password;
+	bool connect_state = false;
+	TcpConnection::Ptr tcp_session;
 };
 
 
