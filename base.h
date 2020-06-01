@@ -16,7 +16,8 @@ using namespace std;
 using namespace brynet;
 using namespace brynet::net;
 
-const string console_title = R"(==========================================================
+const string console_title = 
+R"(==========================================================
  _____   _____ _____    _____                      _      
 |  __ \ / ____/ ____|  / ____|                    | |     
 | |__) | (___| (___   | |     ___  _ __  ___  ___ | | ___ 

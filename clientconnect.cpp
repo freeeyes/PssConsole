@@ -61,14 +61,14 @@ bool read_client_connect_info(shared_ptr<CConsleContext> console_context, const 
 	return true;
 }
 
-bool connect_server(shared_ptr<CConsleContext> console_context)
+bool connect_server(shared_ptr<CConsleContext> console_context, shared_ptr<TcpService> service, shared_ptr<AsyncConnector> connector, wrapper::ConnectionBuilder connectionBuilder)
 {
 	string client_name = "console";
 
-	auto service = TcpService::Create();
+	//启动服务线程
 	service->startWorkerThread(1);
 
-	auto connector = AsyncConnector::Create();
+	//启动链接线程
 	connector->startWorkerThread();
 
 	auto enterCallback = [client_name, console_context](const TcpConnection::Ptr& session) {
@@ -113,7 +113,6 @@ bool connect_server(shared_ptr<CConsleContext> console_context)
 		console_context->connect_state = false;
 	};
 
-	wrapper::ConnectionBuilder connectionBuilder;
 	connectionBuilder.configureService(service)
 		.configureConnector(connector)
 		.configureConnectionOptions({

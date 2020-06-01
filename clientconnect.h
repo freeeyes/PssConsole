@@ -8,4 +8,4 @@ static const char CLIENT_CONFIG_FILE[] = "config.xml";
 
 bool read_client_connect_info(shared_ptr<CConsleContext> console_context, const char* config_file);
 
-bool connect_server(shared_ptr<CConsleContext> console_context);
+bool connect_server(shared_ptr<CConsleContext> console_context, shared_ptr<TcpService> service, shared_ptr<AsyncConnector> connector, wrapper::ConnectionBuilder connectionBuilder);

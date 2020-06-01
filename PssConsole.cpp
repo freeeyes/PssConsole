@@ -18,6 +18,11 @@ int main()
         return 0;
     }
 
+    //初始化TCP线程
+    shared_ptr<TcpService> service = TcpService::Create();
+    shared_ptr<AsyncConnector> connector = AsyncConnector::Create();
+    wrapper::ConnectionBuilder connectionBuilder;
+
     //创建消息总线
     _message_bus_thread.Create(1);
 
@@ -36,7 +41,7 @@ int main()
                 //Set_Console_Output(console_context, "Command is (" + _user_command + ")");
                 //Set_Console_Output_singleLine(console_context, "OK");
 
-                _message_bus_thread.Add_do_function([_user_command, console_context]
+                _message_bus_thread.Add_do_function([_user_command, console_context, service, connector, connectionBuilder]
                     {
                         //处理消息发送事件
                         CPSSConsoleMessage pss_console_message;
@@ -44,14 +49,19 @@ int main()
 
 						if (false == console_context->connect_state)
 						{
-							connect_server(console_context);
+							connect_server(console_context, service, connector, connectionBuilder);
 						}
 
                         //如果连接已经存在
                         if (true == console_context->connect_state)
                         {
                             //发送数据
-                            console_context->tcp_session->send(console_message.c_str(), console_message.length());
+                            console_context->tcp_session->send(console_message.c_str(), 
+                                console_message.length(), 
+                                [console_context]()
+                                { 
+                                    Set_Console_Output(console_context, "send data is ok.");
+                                });
                         }
                     });
             }
