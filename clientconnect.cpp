@@ -74,7 +74,12 @@ bool connect_server(shared_ptr<CConsleContext> console_context, shared_ptr<TcpSe
 	auto enterCallback = [client_name, console_context](const TcpConnection::Ptr& session) {
 		session->setDataCallback([session, console_context](const char* buffer, size_t len) {
 			//处理接收数据
-			Set_Console_Output(console_context, "Recv is (" + string(buffer) + ")");
+			char* recv_data = new char[len + 1];
+			memset(recv_data, 0, len + 1);
+			memcpy_s(recv_data, len, buffer, len);
+			string recv_message = (string)recv_data;
+			Set_Console_Output(console_context, recv_message);
+			delete[] recv_data;
 
 			return len;
 			});
@@ -127,7 +132,7 @@ bool connect_server(shared_ptr<CConsleContext> console_context, shared_ptr<TcpSe
 			ConnectOption::AddProcessTcpSocketCallback([](TcpSocket& socket) {
 			})
 		})
-		.asyncConnect();
+		.syncConnect();
 
 	return true;
 }
