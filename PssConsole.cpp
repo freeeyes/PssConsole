@@ -23,6 +23,11 @@ int main()
     shared_ptr<AsyncConnector> connector = AsyncConnector::Create();
     wrapper::ConnectionBuilder connectionBuilder;
 
+	//启动服务线程
+	service->startWorkerThread(1);
+	//启动链接线程
+	connector->startWorkerThread();
+
     //创建消息总线
     _message_bus_thread.Create(1);
 

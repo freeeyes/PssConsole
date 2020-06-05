@@ -65,12 +65,6 @@ bool connect_server(shared_ptr<CConsleContext> console_context, shared_ptr<TcpSe
 {
 	string client_name = "console";
 
-	//启动服务线程
-	service->startWorkerThread(1);
-
-	//启动链接线程
-	connector->startWorkerThread();
-
 	auto enterCallback = [client_name, console_context](const TcpConnection::Ptr& session) {
 		session->setDataCallback([session, console_context](const char* buffer, size_t len) {
 			//处理接收数据
