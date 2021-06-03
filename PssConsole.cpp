@@ -4,6 +4,13 @@
 
 int main()
 {
+    char szBuff[10] = { '\0' };
+    int nSrc = 10;
+    memcpy_s(szBuff, sizeof(int), (char*)&nSrc, sizeof(int));
+    memcpy_s(&szBuff[4], sizeof(int), (char*)&nSrc, sizeof(int));
+    int ndes = *(reinterpret_cast<int*>(szBuff));
+    printf_s("[Data]=%d.\n", ndes);
+
     shared_ptr<CConsleContext> console_context = std::make_shared<CConsleContext>();
     string _user_command;
     CMessageThread _message_bus_thread;
